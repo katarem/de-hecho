@@ -14,5 +14,8 @@
     "gh-pages": "^5.0.0",
     "moment": "^2.29.4",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0"
   }
 }
