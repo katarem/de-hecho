@@ -1,4 +1,4 @@
-const fs = require("fs");
+import { readFileSync, writeFileSync } from "fs";
 const moment = require("moment/moment");
 const numtxt = document.getElementById("numtxt");
 const lastdate = document.getElementById("lastdate");
