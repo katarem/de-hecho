@@ -1,17 +1,19 @@
 {
+  "homepage": "https://katarem.github.io/de-hecho",
   "name": "de-hecho",
   "version": "1.0.0",
   "description": "pagina para contar la frase 'de hecho'",
   "main": "./src/main.js",
   "private": true,
   "scripts": {
+    "deploy":"gh-pages -d .",
     "build": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^5.3.0-alpha3",
+    "firebase": "^9.22.1",
     "gh-pages": "^5.0.0",
     "moment": "^2.29.4",
     "path": "^0.12.7"

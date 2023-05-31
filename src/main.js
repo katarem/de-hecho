@@ -1,36 +1,36 @@
-import { readFileSync, writeFileSync } from "fs";
 const moment = require("moment/moment");
+const { resolve } = require("path");
+const firedb = require("./firebase");
 const numtxt = document.getElementById("numtxt");
 const lastdate = document.getElementById("lastdate");
 const boton = document.getElementById("btn");
 let num;
 let date;
 boton.addEventListener("click", () => click());
+const db = new firedb();
+
 moment.locale("es");
 read();
-function read() {
-  const rawdata = fs.readFileSync("./data/data.json");
-  const data = JSON.parse(rawdata);
-  num = data.clicks;
-  date = moment(data.date);
-
-  date = date.format("DD [de] MMMM [de] YYYY");
-  console.log(date);
-  numtxt.innerHTML = num + ' "de hecho"';
-  lastdate.innerHTML = "último: " + date;
-}
-
-function save() {
-  const data = {
-    num: num,
-    date: date,
-  };
-  const out = JSON.stringify(data);
-  fs.writeFileSync("./data/data.json", out);
+async function read() {
+  const list = await db.readData();
+  const obj = list[list.length - 1];
+  num = obj.id;
+  date = obj.date;
+  numtxt.innerHTML = obj.id + ' "de hecho"';
+  lastdate.innerHTML = "último: " + obj.date;
 }
 
 function click() {
   num++;
   numtxt.innerHTML = num + ' "de hecho"';
+  date = moment(Date.now());
+  date = date.format("DD [de] MMMM [de] YYYY [a las] HH:mm");
+  lastdate.innerHTML = "último: " + date;
   save();
+}
+
+function save() {
+  const inserted = db.writeData(num, date);
+  if (inserted) console.log("insertado!");
+  else console.log("no se insertó");
 }
