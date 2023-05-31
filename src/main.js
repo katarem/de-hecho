@@ -1,24 +1,23 @@
 const moment = require("moment/moment");
 const { resolve } = require("path");
-const sqlite3 = require("sqlite3").verbose();
+const firedb = require("./firebase");
 const numtxt = document.getElementById("numtxt");
 const lastdate = document.getElementById("lastdate");
 const boton = document.getElementById("btn");
 let num;
 let date;
 boton.addEventListener("click", () => click());
-
-let db = new sqlite3.Database("test.db", sqlite3.OPEN_READWRITE, (error) => {
-  if (error) return console.error(error.message);
-});
-let sql = "";
+const db = new firedb();
 
 moment.locale("es");
 read();
 async function read() {
-  const obj = await getData();
-  numtxt = obj.id + " de hecho";
-  datetxt = "último: " + obj.date;
+  const list = await db.readData();
+  const obj = list[list.length - 1];
+  num = obj.id;
+  date = obj.date;
+  numtxt.innerHTML = obj.id + ' "de hecho"';
+  lastdate.innerHTML = "último: " + obj.date;
 }
 
 function click() {
@@ -31,35 +30,7 @@ function click() {
 }
 
 function save() {
-  const obj = {
-    id: num,
-    date: date,
-  };
-  const inserted = insert(obj);
+  const inserted = db.writeData(num, date);
   if (inserted) console.log("insertado!");
   else console.log("no se insertó");
-}
-
-function insert(obj) {
-  sql = "INSERT INTO webData values(?,?)";
-  db.run(sql, [obj.id, obj.date], (error) => {
-    if (error) {
-      console.error(error.message);
-      return false;
-    }
-  });
-  return true;
-}
-//query data
-
-async function getData() {
-  sql = "SELECT * FROM webData ORDER BY id DESC LIMIT 1";
-  let obj;
-  obj = await new Promise((resolve, reject) => {
-    db.all(sql, (error, rows) => {
-      if (error) reject("error");
-      else resolve(rows[0]);
-    });
-  });
-  return obj;
 }
