@@ -19,7 +19,7 @@ async function read() {
       num = data.num;
       date = data.date;
     });
-  numtxt.innerHTML = num + ' "de hecho"';
+  numtxt.innerHTML = num + ' "de hechos"';
   lastdate.innerHTML = "último: " + date;
 }
 
