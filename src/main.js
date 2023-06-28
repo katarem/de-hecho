@@ -7,7 +7,6 @@ const boton = document.getElementById("btn");
 let num;
 let date;
 boton.addEventListener("click", () => click());
-
 moment.locale("es");
 read();
 async function read() {
