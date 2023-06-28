@@ -1,6 +1,6 @@
 const moment = require("moment");
 const config = require("./config.js");
-const url = `http://${config.SERVER_IP}/`;
+const url = `https://${config.SERVER_IP}:80`;
 const numtxt = document.getElementById("numtxt");
 const lastdate = document.getElementById("lastdate");
 const boton = document.getElementById("btn");
@@ -15,6 +15,7 @@ async function read() {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       num = data.num;
       date = data.date;
     });
