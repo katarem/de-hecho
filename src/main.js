@@ -1,23 +1,26 @@
-const moment = require("moment/moment");
-const { resolve } = require("path");
-const firedb = require("./firebase");
+const moment = require("moment");
+const config = require("./config.js");
+const url = `https://${config.SERVER_IP}/`;
 const numtxt = document.getElementById("numtxt");
 const lastdate = document.getElementById("lastdate");
 const boton = document.getElementById("btn");
 let num;
 let date;
 boton.addEventListener("click", () => click());
-const db = new firedb();
-
 moment.locale("es");
 read();
 async function read() {
-  const list = await db.readData();
-  const obj = list[list.length - 1];
-  num = obj.id;
-  date = obj.date;
-  numtxt.innerHTML = obj.id + ' "de hecho"';
-  lastdate.innerHTML = "último: " + obj.date;
+  await fetch(url, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      num = data.num;
+      date = data.date;
+    });
+  numtxt.innerHTML = num + ' "de hecho"';
+  lastdate.innerHTML = "último: " + date;
 }
 
 function click() {
@@ -29,8 +32,21 @@ function click() {
   save();
 }
 
-function save() {
-  const inserted = db.writeData(num, date);
-  if (inserted) console.log("insertado!");
-  else console.log("no se insertó");
+async function save() {
+  const datos = {
+    num: num,
+    date: date,
+  };
+  const enviar = JSON.stringify(datos);
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: enviar,
+  }).then((response) =>
+    response.ok
+      ? console.log("enviado correctamente")
+      : console.log("no se envió")
+  );
 }
