@@ -1,6 +1,6 @@
 const moment = require("moment");
 const config = require("./config.js");
-const url = `https://${config.SERVER_IP}:80`;
+const url = `https://${config.SERVER_IP}/`;
 const numtxt = document.getElementById("numtxt");
 const lastdate = document.getElementById("lastdate");
 const boton = document.getElementById("btn");
