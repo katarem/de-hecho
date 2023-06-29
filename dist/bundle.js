@@ -1385,7 +1385,7 @@ eval("/* module decorator */ module = __webpack_require__.nmd(module);\n//! mome
   \***********************/
 /***/ ((module) => {
 
-eval("config = {\r\n  SERVER_IP: \"188.78.156.28\",\r\n};\r\n\r\nmodule.exports = config;\r\n\n\n//# sourceURL=webpack://de-hecho/./src/config.js?");
+eval("config = {\r\n  SERVER_IP: \"api.katarem.site\",\r\n};\r\n\r\nmodule.exports = config;\r\n\n\n//# sourceURL=webpack://de-hecho/./src/config.js?");
 
 /***/ }),
 

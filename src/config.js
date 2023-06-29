@@ -1,5 +1,5 @@
 config = {
-  SERVER_IP: "188.78.156.28",
+  SERVER_IP: "api.katarem.site",
 };
 
 module.exports = config;
