@@ -6,7 +6,7 @@ const lastdate = document.getElementById("lastdate");
 const boton = document.getElementById("btn");
 let num;
 let date;
-boton.addEventListener("click", () => click());
+boton.addEventListener("click", () => click(), { once: true });
 moment.locale("es");
 read();
 async function read() {
@@ -49,4 +49,5 @@ async function save() {
       ? console.log("enviado correctamente")
       : console.log("no se envió")
   );
+  boton.innerHTML = "FUCK YOU SPAMMERS >:)";
 }
